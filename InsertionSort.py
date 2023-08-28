@@ -47,7 +47,7 @@ def main():
         time_taken = measure_time(random_array, size)
         execution_times.append(time_taken)
 
-    # Fit a quadratic curve to measured runtimes
+    # Fit a quadratic curve to measured runtimes O(n^2)
     p = np.polyfit(array_sizes, execution_times, 2)
     theoretical_fit = np.polyval(p, array_sizes)
 
