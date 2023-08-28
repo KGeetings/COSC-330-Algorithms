@@ -7,21 +7,42 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 
-def insertion_sort(array):
-    for i in range(1, len(array)):
-        key = array[i]
-        j = i - 1
-        while j >= 0 and key < array[j]:
-            array[j + 1] = array[j]
-            j -= 1
-        array[j + 1] = key
+def merge_sort(array):
+    if len(array) > 1:
+        mid = len(array) // 2
+        left_half = array[:mid]
+        right_half = array[mid:]
+
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                array[k] = left_half[i]
+                i += 1
+            else:
+                array[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            array[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            array[k] = right_half[j]
+            j += 1
+            k += 1
 
 def generate_random_array(size):
     return [random.randint(1, 1000) for _ in range(size)]
 
 def measure_time(array, size):
     start_time = time.time()
-    insertion_sort(array)
+    merge_sort(array)
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Array size: {size}, Elapsed time: {elapsed_time:.6f} seconds")
@@ -29,16 +50,17 @@ def measure_time(array, size):
 
 def plot_runtimes(sizes, runtimes, theoretical_fit):
     plt.plot(sizes, runtimes, marker='o', label='Actual Runtime')
-    plt.plot(sizes, theoretical_fit, linestyle='dotted', label='Theoretical O(n^2)')
+    plt.plot(sizes, theoretical_fit, linestyle='dotted', label='Theoretical O(n log n)')
     plt.xlabel('Array Size')
     plt.ylabel('Time (seconds)')
-    plt.title('Insertion Sort Runtimes')
+    plt.title('Merge Sort Runtimes')
     plt.grid(True)
     plt.legend()
     plt.show()
 
 def main():
-    array_sizes = [10, 50, 100, 500, 1000, 2500, 5000, 7500, 10000]
+    max_array_size = 18850
+    array_sizes = list(range(100, max_array_size + 1, 750))
     execution_times = []
 
     for size in array_sizes:
@@ -46,8 +68,8 @@ def main():
         time_taken = measure_time(random_array, size)
         execution_times.append(time_taken)
 
-    # Fit a quadratic curve to measured runtimes
-    p = np.polyfit(array_sizes, execution_times, 2)
+    # Fit a linear curve to measured runtimes (O(n log n))
+    p = np.polyfit(array_sizes, execution_times, 1)
     theoretical_fit = np.polyval(p, array_sizes)
 
     # Print and plot results
