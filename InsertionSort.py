@@ -38,8 +38,11 @@ def plot_runtimes(sizes, runtimes, theoretical_fit):
     plt.show()
 
 def main():
-    max_array_size = 18850
-    array_sizes = list(range(100, max_array_size + 1, 750))
+    array_start = 100
+    array_step = 750
+    array_max = 18850
+
+    array_sizes = list(range(array_start, array_max + 1, array_step))
     execution_times = []
 
     for size in array_sizes:
