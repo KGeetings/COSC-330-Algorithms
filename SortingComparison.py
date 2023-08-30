@@ -1,5 +1,5 @@
 # Description: Sorting Comparison (Insertion Sort vs. Merge Sort)
-# Author: Kenyon Geetings
+# Author: Kenyon Geetings & Sam Scholz
 # Class: COSC-330 Algorithms
 
 import time
@@ -116,7 +116,7 @@ def main():
     plt.legend()
     plt.show()
 
-    excel_filename = 'sorting_runtimes.xlsx'
+    excel_filename = 'sorting_comparison.xlsx'
     runtime_data.to_excel(excel_filename, index=False)
     print(f"Runtime data saved to {excel_filename}")
 
