@@ -78,6 +78,8 @@ def main():
     array_sizes = list(range(array_start, array_max + 1, array_step))
     execution_times_insertion = []
     execution_times_merge = []
+    n_squared_values = []
+    n_log_n_values = []
 
     runtime_data = pd.DataFrame(columns=['Array Size', 'Insertion Sort Time', 'Merge Sort Time'])
 
@@ -91,9 +93,13 @@ def main():
         random_array_merge = random_array.copy()
         time_taken_merge = measure_time(merge_sort, random_array_merge, size)
         execution_times_merge.append(time_taken_merge)
+        n_squared = size ** 2
+        n_log_n = size * np.log2(size)
+        n_squared_values.append(n_squared)
+        n_log_n_values.append(n_log_n)
 
-        runtime_data = pd.concat([runtime_data, pd.DataFrame({'Array Size': [size], 'Insertion Sort Time': [time_taken_insertion], 'Merge Sort Time': [time_taken_merge]})], ignore_index=True)
-
+        runtime_data = pd.concat([runtime_data, pd.DataFrame({'Array Size': [size], 'Insertion Sort Time': [time_taken_insertion], 'Merge Sort Time': [time_taken_merge], 'n^2': [n_squared], 'n log n': [n_log_n]})], ignore_index=True)
+    
     # Fit curves and plot results for both algorithms
     p_insertion = np.polyfit(array_sizes, execution_times_insertion, 2)
     theoretical_fit_insertion = np.polyval(p_insertion, array_sizes)
