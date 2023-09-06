@@ -22,7 +22,8 @@ def quicksort(arr):
 
     quicksort_helper(arr, 0, len(arr) - 1)
 
-arr = [2, 8, 7, 1, 3, 5, 6, 7]
+#arr = [2, 8, 7, 1, 3, 5, 6, 7]
+arr = [13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11]
 
 print("Initial array:", arr)
 quicksort(arr)

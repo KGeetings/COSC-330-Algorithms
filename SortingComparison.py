@@ -73,7 +73,7 @@ def main():
     array_start = 100
     array_step = 750
     array_max = 18850
-    array_max = 10000
+    #array_max = 10000
 
     array_sizes = list(range(array_start, array_max + 1, array_step))
     execution_times_insertion = []
