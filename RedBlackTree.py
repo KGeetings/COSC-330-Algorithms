@@ -18,6 +18,8 @@ class RedBlackTree:
             self.root.color = 'black'
         else:
             self._insert_recursive(self.root, new_node)
+        self.inorder_traversal(self.root)
+        print()
 
     def _insert_recursive(self, current, new_node):
         if new_node.key < current.key:
@@ -71,10 +73,16 @@ class RedBlackTree:
                     self._left_rotate(node.parent.parent)
         self.root.color = 'black'
 
-    def inorder_traversal(self, node):
+    """ def inorder_traversal(self, node):
         if node != self.NIL_LEAF:
             self.inorder_traversal(node.left)
             print(f"Key: {node.key}, Color: {node.color}")
+            self.inorder_traversal(node.right) """
+    
+    def inorder_traversal(self, node):
+        if node != self.NIL_LEAF:
+            self.inorder_traversal(node.left)
+            print(node.key, end=', ')  # Print keys in one line separated by commas
             self.inorder_traversal(node.right)
 
     def _left_rotate(self, node):
@@ -126,19 +134,15 @@ class RedBlackTree:
 def main():
     tree1 = RedBlackTree()
     keys1 = [41, 38, 31, 12, 19, 8]
+    print("Inserting keys into Tree 1:")
     for key in keys1:
         tree1.insert(key)
 
-    print("In-Order Traversal of Tree 1:")
-    tree1.inorder_traversal(tree1.root)
-
     tree2 = RedBlackTree()
     keys2 = [11, 2, 14, 1, 7, 15, 5, 8, 4]
+    print("\n\nInserting keys into Tree 2:")
     for key in keys2:
         tree2.insert(key)
-
-    print("In-Order Traversal of Tree 2:")
-    tree2.inorder_traversal(tree2.root)
 
 if __name__ == "__main__":
     main()
