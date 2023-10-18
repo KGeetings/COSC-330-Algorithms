@@ -34,18 +34,10 @@ class MinQueue:
         right_child_index = 2 * index + 2
         smallest = index
 
-        if (
-            left_child_index < len(self.minQ)
-            and self.minQ[left_child_index] < self.minQ[smallest]
-        ):
+        if (left_child_index < len(self.minQ) and self.minQ[left_child_index] < self.minQ[smallest]):
             smallest = left_child_index
-
-        if (
-            right_child_index < len(self.minQ)
-            and self.minQ[right_child_index] < self.minQ[smallest]
-        ):
+        if (right_child_index < len(self.minQ) and self.minQ[right_child_index] < self.minQ[smallest]):
             smallest = right_child_index
-
         if smallest != index:
             self.minQ[index], self.minQ[smallest] = self.minQ[smallest], self.minQ[index]
             self._heapify_down(smallest)
