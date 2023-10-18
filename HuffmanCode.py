@@ -2,29 +2,29 @@
 # Author: Kenyon Geetings & Sam Scholz
 # Class: COSC-330 Algorithms
 
-class MinQueueHeap:
+class MinQueue:
     def __init__(self):
-        self.heap = []
+        self.minQ = []
 
-    def push(self, item):
-        self.heap.append(item)
-        self._heapify_up(len(self.heap) - 1)
+    def insert(self, item):
+        self.minQ.append(item)
+        self._heapify_up(len(self.minQ) - 1)
 
-    def pop(self):
-        if len(self.heap) == 0:
+    def extract_min(self):
+        if len(self.minQ) == 0:
             return None
-        if len(self.heap) == 1:
-            return self.heap.pop()
-        root = self.heap[0]
-        self.heap[0] = self.heap.pop()
+        if len(self.minQ) == 1:
+            return self.minQ.pop()
+        root = self.minQ[0]
+        self.minQ[0] = self.minQ.pop()
         self._heapify_down(0)
         return root
 
     def _heapify_up(self, index):
         while index > 0:
             parent_index = (index - 1) // 2
-            if self.heap[index] < self.heap[parent_index]:
-                self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
+            if self.minQ[index] < self.minQ[parent_index]:
+                self.minQ[index], self.minQ[parent_index] = self.minQ[parent_index], self.minQ[index]
                 index = parent_index
             else:
                 break
@@ -35,19 +35,19 @@ class MinQueueHeap:
         smallest = index
 
         if (
-            left_child_index < len(self.heap)
-            and self.heap[left_child_index] < self.heap[smallest]
+            left_child_index < len(self.minQ)
+            and self.minQ[left_child_index] < self.minQ[smallest]
         ):
             smallest = left_child_index
 
         if (
-            right_child_index < len(self.heap)
-            and self.heap[right_child_index] < self.heap[smallest]
+            right_child_index < len(self.minQ)
+            and self.minQ[right_child_index] < self.minQ[smallest]
         ):
             smallest = right_child_index
 
         if smallest != index:
-            self.heap[index], self.heap[smallest] = self.heap[smallest], self.heap[index]
+            self.minQ[index], self.minQ[smallest] = self.minQ[smallest], self.minQ[index]
             self._heapify_down(smallest)
 
 
@@ -69,20 +69,20 @@ def huffman(input_string):
         freq = int(freq_str)
         char_freq[char] = freq
 
-    heap = MinQueueHeap()
+    minQ = MinQueue()
     for char, freq in char_freq.items():
-        heap.push(Node(char, freq))
+        minQ.insert(Node(char, freq))
 
-    while len(heap.heap) > 1:
-        x = heap.pop()
-        y = heap.pop()
+    while len(minQ.minQ) > 1:
+        x = minQ.extract_min()
+        y = minQ.extract_min()
 
         z = Node(None, x.freq + y.freq)
         z.left = x
         z.right = y
-        heap.push(z)
+        minQ.insert(z)
 
-    root = heap.heap[0]
+    root = minQ.minQ[0]
     huffman_codes = {}
 
     def traverse(node, code):
