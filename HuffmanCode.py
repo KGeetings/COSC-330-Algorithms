@@ -89,6 +89,46 @@ def huffman(input_string):
     return huffman_codes
 
 
+def decoded_punchline(encoded_phrase):
+    # Just used for the punchline
+    huffman_tree_punchline = {
+        'e': '110',
+        ' ': '100',
+        'o': '000',
+        'c': '0110',
+        's': '0111',
+        'd': '1011',
+        'n': '0010',
+        'u': '10101',
+        't': '11100',
+        'h': '11101',
+        'i': '00110',
+        'r': '11110',
+        'p': '00111',
+        'l': '01000',
+        'B': '010010',
+        'a': '111111',
+        'j': '010011',
+        'k': '010100',
+        'w': '010101',
+        'm': '010110',
+        ',': '010111',
+        'b': '101000',
+        'y': '101001',
+        '!': '111110',
+    }
+
+    decoded_punchline = ""
+    current_code = ""
+    for bit in encoded_phrase:
+        current_code += bit
+        for symbol, code in huffman_tree_punchline.items():
+            if current_code == code:
+                decoded_punchline += symbol
+                current_code = ""
+    print(decoded_punchline)
+
+
 def main():
     readFromFile = False
 
@@ -100,15 +140,18 @@ def main():
         input_lines = [
             "a:45 b:13 c:12 d:16 e:9 f:5",
             "a:1 b:1 c:2 d:3 e:5 f:8 g:13 h:21",
-            "m:20 n:22 o:18 p:24 r:20 t:17 w:26 x:16"
+            "m:20 n:22 o:18 p:24 r:20 t:17 w:26 x:16",
         ]
 
+    print("Why did the Huffman coder get kicked out of the comedy club?\n")
     for input_line in input_lines:
         huffman_codes = huffman(input_line)
         print("Input:", input_line)
         for char, code in huffman_codes.items():
             print(f"Character: {char}, Code: {code}")
         print()
+    decoded_punchline("01001011001101111111010101111101001110011101110001101111010001001100001010011001111000101011101111011010011100000000100011000001011000111111101100111011111010110101111001111110010101110000100001010000001011101001100011000010101010001011100101111001100001011110100111001110111010000111101010010011011101010000011000101100111111110")
+
 
 if __name__ == "__main__":
     main()
