@@ -57,18 +57,18 @@ def plot_bar_chart(weights, iteration, prev_weights):
     plt.close()
 
 
-def plot_line_chart(weights_history):
+def plot_line_chart(weights_history, num_iterations):
     plt.plot(weights_history)
-    plt.title("Multiplicative Weights Algorithm - Line Chart")
+    plt.title("Multiplicative Weights Algorithm - " + str(num_iterations) + " Iterations")
     plt.xlabel("Iterations")
     plt.ylabel("Weights")
     plt.legend(["Rock", "Paper", "Scissors"])
-    plt.savefig("./mwa-line-chart.png")
+    plt.savefig("./mwa-line-chart " + str(num_iterations) + " iterations.png")
     plt.show()
 
 
 def main():
-    num_iterations = 10
+    num_iterations = 100
     learning_rate = 0.1
     weights = [1 / 3, 1 / 3, 1 / 3]
     actions = ["rock", "paper", "scissors"]
@@ -104,7 +104,7 @@ def main():
             )
 
     # Plot line chart after all iterations
-    plot_line_chart(weights_history)
+    plot_line_chart(weights_history, num_iterations)
 
 
 if __name__ == "__main__":
