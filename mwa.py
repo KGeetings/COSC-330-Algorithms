@@ -50,7 +50,7 @@ def plot_bar_chart(weights, iteration, prev_weights):
     plt.ylim(0, 1)
     for i, value in enumerate(weights):
         plt.text(i, value + 0.01, f"{value:.2f}", ha="center", va="bottom")
-    plt.title("Multiplicative Weights Algorithm - Bar Chart")
+    plt.title("Multiplicative Weights Algorithm - Iteration " + str(iteration))
     plt.xlabel("Actions")
     plt.ylabel("Weights")
     plt.savefig(f"./mwa-bar-charts/bar_chart_{iteration}.png")
@@ -80,7 +80,9 @@ def main():
 
     for i in range(num_iterations):
         computer_action = "paper" if i % 3 < 2 else "scissors"
-        player_action = random.choices(["rock", "paper", "scissors"], weights)[0]
+        # Have player choose action based on what is weighted more heavily
+        player_action = actions[weights.index(max(weights))]
+        # player_action = random.choices(["rock", "paper", "scissors"], weights)[0]
         print(
             f"Iteration {i} - Weights (rock, paper, scissors) = {list(map(lambda x: round(x, 2), weights))}, player = {player_action}, computer = {computer_action}"
         )
@@ -92,14 +94,14 @@ def main():
         # Record weights for line chart
         weights_history.append(weights.copy())
 
+        # Plot and save bar chart every iteration
+        prev_weights = weights_history[i]
+        plot_bar_chart(weights, i + 1, prev_weights)
+
         if i == num_iterations - 1:
             print(
-                f"Iteration {i} - Weights (rock, paper, scissors) = {list(map(lambda x: round(x, 2), weights))}"
+                f"Iteration {i + 1} - Weights (rock, paper, scissors) = {list(map(lambda x: round(x, 2), weights))}"
             )
-
-        # Plot and save bar chart every iteration
-        prev_weights = weights_history[i - 1]
-        plot_bar_chart(weights, i + 1, prev_weights)
 
     # Plot line chart after all iterations
     plot_line_chart(weights_history)
