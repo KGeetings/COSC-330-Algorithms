@@ -6,10 +6,12 @@ def multiplicative_weights_algorithm(weights, action, outcome, learning_rate):
     # Update weights based on the outcome of the action
     for i in range(len(weights)):
         if i == action:
+            # Expert who predicted the action gets a boost if the outcome is a win, decrease if it's a loss
             weights[i] *= (
                 (1 + learning_rate) if outcome == "win" else (1 - learning_rate)
             )
         else:
+            # Experts who didn't predict the action get a decrease if the outcome is a win, increase if it's a loss
             weights[i] *= (
                 (1 - learning_rate) if outcome == "win" else (1 + learning_rate)
             )
@@ -59,7 +61,9 @@ def plot_bar_chart(weights, iteration, prev_weights):
 
 def plot_line_chart(weights_history, num_iterations):
     plt.plot(weights_history)
-    plt.title("Multiplicative Weights Algorithm - " + str(num_iterations) + " Iterations")
+    plt.title(
+        "Multiplicative Weights Algorithm - " + str(num_iterations) + " Iterations"
+    )
     plt.xlabel("Iterations")
     plt.ylabel("Weights")
     plt.legend(["Rock", "Paper", "Scissors"])
